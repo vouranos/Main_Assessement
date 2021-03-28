@@ -1,0 +1,43 @@
+---1) how many orders are placed in the "Breakfast" cuisine (Breakfast_Orders)?
+
+select  city, count(distinct order_id) as orders 
+from `bi-2019-test.ad_hoc.orders_jan2021` 
+where cuisine_parent='Breakfast'
+group by city
+having count(distinct order_id)>500
+order by orders desc;
+
+---2) how many users ordered from the "Breakfast" cuisine (Breakfast_Users)?
+
+select  city, count(distinct user_id) as orders 
+from `bi-2019-test.ad_hoc.orders_jan2021` 
+where cuisine_parent='Breakfast'
+group by city
+having count(distinct order_id)>500
+order by orders desc 
+
+
+---3) what is the Average Basket of the Breakfast_Users that we defined before?
+---Order your findings, showing us the 10 cities with the most Breakfast Orders.
+
+select c.city, c.avg_basket from
+(select city, avg(avg_basket) avg_basket from (
+select city, user_id, avg(basket) avg_basket from `bi-2019-test.ad_hoc.orders_jan2021` a
+inner join 
+(select distinct  user_id as breakfast_users 
+from `bi-2019-test.ad_hoc.orders_jan2021` 
+where cuisine_parent='Breakfast') b
+on a.user_id=b.breakfast_users
+group by city,user_id) 
+group by city) c
+inner join 
+(select  city, count(distinct order_id) as orders 
+from `bi-2019-test.ad_hoc.orders_jan2021` 
+where cuisine_parent='Breakfast'
+group by city
+having count(distinct order_id)>500
+order by orders desc limit 10 ) d
+on c.city=d.city;
+
+
+
