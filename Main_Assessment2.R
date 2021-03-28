@@ -8,10 +8,10 @@ library("rfm")
 library("dplyr")
 
 #set input file path
-input_file<-"C:/Users/vasileios.ouranos/OneDrive - Accenture/Desktop/Main Assessement/Orders.csv"
+input_file<-"C:/Users/vo/Desktop/Main Assessement/Orders.csv"
 
 #set output file path
-output_file<-"C:/Users/vasileios.ouranos/OneDrive - Accenture/Desktop/Main Assessement/customers.csv"
+output_file<-"C:/Users/vo/Desktop/Main Assessement/customers.csv"
 
 
 Orders<-read.csv(input_file,encoding = 'UTF-8' )
