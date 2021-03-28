@@ -7,6 +7,16 @@ group by city
 having count(distinct order_id)>500
 order by orders desc;
 
+--Comment: count(order_id) and count(distinct order_id) are equilavent because order_id is  unique for each order.
+--So the below query would be equilavent:
+
+select  city, count(distinct order_id) as orders 
+from `bi-2019-test.ad_hoc.orders_jan2021` 
+where cuisine_parent='Breakfast'
+group by city
+having count(order_id)>500
+order by orders desc;
+
 ---2) how many users ordered from the "Breakfast" cuisine (Breakfast_Users)?
 
 select  city, count(distinct user_id) as orders 
@@ -16,6 +26,16 @@ group by city
 having count(distinct order_id)>500
 order by orders desc 
 
+--Comment: Same as above, I would change count(distinct order_id) with count(order_id).
+-- I would also change the bame of the second column of the result to users instead of orders. 
+--The query would be:
+
+select  city, count(distinct user_id) as users
+from `bi-2019-test.ad_hoc.orders_jan2021` 
+where cuisine_parent='Breakfast'
+group by city
+having count(order_id)>500
+order by orders desc 
 
 ---3) what is the Average Basket of the Breakfast_Users that we defined before?
 ---Order your findings, showing us the 10 cities with the most Breakfast Orders.
@@ -39,5 +59,5 @@ having count(distinct order_id)>500
 order by orders desc limit 10 ) d
 on c.city=d.city;
 
-
+--Comment : I would not change anything on this query
 
